@@ -1,0 +1,75 @@
+#sign-in{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(45, 40, 40);
+}
+.file-div{
+    background-color: rgb(24, 212, 212);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.data{
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 30vh;
+    border-radius: .4em;
+}
+.btn-upload{
+    margin-top: 5%;
+    height: 50px;
+    width: 20%;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+.btn-upload:hover{
+    background-color: blue;
+    color: white;
+    border-radius: .5em;
+}
+#file{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    display: none;
+}
+.lable-file{
+    width: 100%;
+    margin-top: -4%;
+    font-size: 1.5em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.download{
+    background-color: rgb(28, 156, 160);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    height: 100vh;
+} 
+.wrapper{
+    width: 10%;
+    height: 20vh;
+    background-color: whitesmoke;
+    border-radius: .5em;
+    margin-top: 5%;
+}
+.download-btn{
+    height: 40px;
+    cursor: pointer;
+    margin-top: 8%;
+}
+.download-btn:hover{
+    background-color: blue;
+    color: white;
+    border-radius: .5em;
+}
