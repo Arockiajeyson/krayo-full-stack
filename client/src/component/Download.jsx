@@ -4,7 +4,7 @@ import Context from './ContextApi';
 import axios from 'axios'
 import './signin.css'
 export default function Download() {
-    const { state ,downloadfile} = useContext(Context)
+    const { state, downloadfile } = useContext(Context)
     const [fileData, setFileData] = useState([])
     useEffect(() => {
         console.log(state)
@@ -14,17 +14,20 @@ export default function Download() {
         }
         resData()
     }, [])
-    
+
     return (
-        <div className='download'>
-            {fileData.map((e,i) => {
-                return (
-                    <div key={i} className='wrapper'>
-                        <p>{`Uploaded file ${i+1}`}</p>
-                        <button className='download-btn' onClick={() => downloadfile(e._id)}>Click to download file</button>
-                    </div>
-                )
-            })}
-        </div>
+            <div className='down-div'>
+                <h3 className='h-tag'>Uploaded files</h3>
+                <div className='download'>
+                    {fileData.map((e, i) => {
+                        return (
+                            <div key={i} className='wrapper'>
+                                <p>{`Uploaded file ${i + 1}`}</p>
+                                <button className='download-btn' onClick={() => downloadfile(e._id)}>{e.fileName.split('-')[1]}</button>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
     )
 }

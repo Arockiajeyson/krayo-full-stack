@@ -1,17 +1,27 @@
-import React, { useState,useRef  } from 'react'
+import React, { useState, useRef } from 'react'
 import { createContext } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 const Context = createContext()
 export function ContextApi({ children }) {
-    const [state,setState] =useState()
-    const [state1,setState1] =useState()
+    const [state, setState] = useState()
+    const [state1, setState1] = useState()
+    const [name, setName] = useState(false)
     const reference = useRef(null)
-    const navigate =useNavigate()
+    const navigate = useNavigate()
+
+    const handleChangeName = () => {
+        setState1(reference.current.files[0].name)
+        setName(true)
+    }
+
     const handlechange = async (e) => {
         e.preventDefault()
         // console.log(state1)
         try {
+            if(!reference.current.files[0]){
+                return alert("Please upload file")
+            }
             const formData = new FormData();
             formData.append('file', reference.current.files[0])
             const responeses = await axios.post(`http://localhost:3001/filesupload/${state}`, formData);
@@ -26,7 +36,7 @@ export function ContextApi({ children }) {
     const downloadfile = async (i) => {
         const res = await axios.get(`http://localhost:3001/fileDownload/${i}`, { responseType: "blob" })
         // console.log(res.data)
-        
+
         const blob = new Blob([res.data], { type: res.data.type });
         let filename = blob.type
         let newFilename = filename.split('/')
@@ -34,11 +44,11 @@ export function ContextApi({ children }) {
         link.href = window.URL.createObjectURL(blob);
         link.download = `${newFilename[0]}.${newFilename[1]}`;
         link.click();
-        
+
     }
     return (
         <div>
-            <Context.Provider value={{setState,state,handlechange,reference,downloadfile}}>
+            <Context.Provider value={{ setState, state, handlechange, reference, downloadfile, state1, name,handleChangeName }}>
                 {children}
             </Context.Provider>
         </div>

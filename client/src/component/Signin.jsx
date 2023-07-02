@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import './signin.css'
 import Context from './ContextApi'
-
+import Cookies from 'universal-cookie'
 export default function Signin() {
     const { setState } = useContext(Context)
     const navigate = useNavigate()
     const handlecallback = async (res) => {
         const decode = jwt_decode(res.credential)
+        let cookies = new Cookies()
+        cookies.set('token', res.credential)
         setState(decode.email)
         navigate('/files')
     }
@@ -26,7 +28,10 @@ export default function Signin() {
     }, []);
     return (
         <div id='sign-in'>
-            <div id='btn'></div>
+            <div className='google-sign-in'>
+                <p className='p-tag'>Google sign-in</p>
+                <div id='btn'></div>
+            </div>
         </div>
     )
 }
