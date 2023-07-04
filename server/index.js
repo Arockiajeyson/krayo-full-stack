@@ -48,14 +48,13 @@ const upload = multer({ storage: storage });
 app.post('/filesupload/:name',upload.single('file'),async(req,res)=>{
     try {
         const audioUrls = req.file.path;
-        console.log(req.file.mimetype,"mimitype")
-        console.log(req.file.stream,"stream")
-        console.log(req.file.originalname,"orginal")
+       
         const uploadfile =await Schema.create({
             Email:req.params.name,
             fileName:audioUrls,
+            file:req.body.name
         })
-        console.log(uploadfile)
+        
         return res.json('done')
     } catch (error) {
         return res.json(error.message)
@@ -64,22 +63,7 @@ app.post('/filesupload/:name',upload.single('file'),async(req,res)=>{
 
 // res.download(req.files.file.tempFilePath)
 
-        // const fileuploader = await cloudinary.uploader.upload(req.files.file.tempFilePath,{
-        //     public_id: `${Date.now()}`,
-        //     resource_type: "auto",
-        //     folder: "images",
-        // })
-        // console.log(fileuploader.secure_url)
-        // console.log(fileuploader.public_id)
-        // let dar =await cloudinary.url(fileuploader.public_id, { secure: true })
-        // console.log(dar)
-        // const audioUrls = req.files.map(file => file.filename);
-        // console.log(audioUrls)
-        // // const uploadfile =await Schema.create({
-        // //     Email:req.params.name,
-        // //     fileName:req.files.file.name,
-            
-        // // })
+ 
 //fetching
 
 app.post('/download',async(req,res)=>{
@@ -100,10 +84,21 @@ app.get('/fileDownload/:id',async(req,res)=>{
         const file64 =await Schema.findById(params)
         const paths = file64.fileName
         const filepath = path.join(__dirname,`./${paths}`)
-         res.download(filepath)
+        res.download(filepath)
     // } catch (error) {
     //     return res.json(error.message)
     // }
+})
+
+app.get('/checking/:email',async(req,res)=>{
+    const email = req.params.email
+    const dataMongo =await Schema.find({Email:email})
+    // console.log(dataMongo,'check')
+    if(dataMongo.length != 0){
+        return res.json('exist')
+    }else{
+        return res.json('not exist')
+    }
 })
 
 app.listen(3001,async()=>{

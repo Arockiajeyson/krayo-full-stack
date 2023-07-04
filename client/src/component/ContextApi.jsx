@@ -7,6 +7,7 @@ export function ContextApi({ children }) {
     const [state, setState] = useState()
     const [state1, setState1] = useState()
     const [name, setName] = useState(false)
+    const [fileName, setFileName] = useState()
     const reference = useRef(null)
     const navigate = useNavigate()
 
@@ -19,11 +20,12 @@ export function ContextApi({ children }) {
         e.preventDefault()
         // console.log(state1)
         try {
-            if(!reference.current.files[0]){
+            if (!reference.current.files[0]) {
                 return alert("Please upload file")
             }
             const formData = new FormData();
             formData.append('file', reference.current.files[0])
+            formData.append('name',fileName)
             const responeses = await axios.post(`http://localhost:3001/filesupload/${state}`, formData);
             console.log(responeses)
             if (responeses.data == 'done') {
@@ -46,9 +48,20 @@ export function ContextApi({ children }) {
         link.click();
 
     }
+    const fileChecking = async() => {
+        
+        const res = await axios.get(`http://localhost:3001/checking/${state}`)
+        
+        if(res.data=='exist'){
+            navigate('/Download')
+        }else{
+            alert('No data exist')
+        }
+    }
+
     return (
         <div>
-            <Context.Provider value={{ setState, state, handlechange, reference, downloadfile, state1, name,handleChangeName }}>
+            <Context.Provider value={{ setState,setFileName, state, handlechange, reference, downloadfile, state1, name, handleChangeName,fileChecking }}>
                 {children}
             </Context.Provider>
         </div>

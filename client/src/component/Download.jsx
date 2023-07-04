@@ -17,12 +17,12 @@ export default function Download() {
 
     return (
             <div className='down-div'>
-                <h3 className='h-tag'>Uploaded files</h3>
+                <h3 className='h-tag down-h3'>Uploaded files</h3>
                 <div className='download'>
                     {fileData.map((e, i) => {
                         return (
                             <div key={i} className='wrapper'>
-                                <p>{`Uploaded file ${i + 1}`}</p>
+                                <p>{e.file}</p>
                                 <button className='download-btn' onClick={() => downloadfile(e._id)}>{e.fileName.split('-')[1]}</button>
                             </div>
                         )
